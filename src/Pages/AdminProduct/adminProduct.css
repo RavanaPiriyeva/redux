@@ -1,0 +1,19 @@
+.adminproduct input {
+    width: 300px;
+    padding: 10px;
+    border: none;
+    border-bottom: 1px solid gray;
+
+}
+
+.adminproduct label {
+    display: inline-block;
+    width: 70px;
+}
+
+.adminproduct .input-item {
+    margin: 20px 0;
+}
+.adminproduct{
+    padding-left: 200px;
+}
