@@ -9,6 +9,9 @@ import { BrowserRouter } from 'react-router-dom';
 import { BasketProvider } from './Pages/Basket/BasketContext';
 import { LoginProvider } from './Pages/Login/LoginContext';
 import { OrderProvider } from './Components/Order/OrderContext';
+import { Provider } from "react-redux";
+import basketReducer from './reducer/basketReducer';
+import { createStore } from 'redux';
 
 
 const queryClient = new QueryClient({
@@ -18,19 +21,17 @@ const queryClient = new QueryClient({
     },
   },
 });
+const store = createStore(basketReducer);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <QueryClientProvider client={queryClient}>
-    <LoginProvider>
-      <OrderProvider>
-        <BasketProvider>
+       <Provider store={store}>
+
           <BrowserRouter>
             <App></App>
           </BrowserRouter>
-        </BasketProvider>
-      </OrderProvider>
-    </LoginProvider>
+          </Provider>
     <ReactQueryDevtools initialIsOpen={false} />
   </QueryClientProvider>
 );
