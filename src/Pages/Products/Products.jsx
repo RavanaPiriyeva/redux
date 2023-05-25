@@ -15,10 +15,12 @@ import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 import './products.css'
 import { BasketContext } from "../Basket/BasketContext";
 import { useQuery } from "react-query";
+import { useDispatch, useSelector } from "react-redux";
 
 const Products = () => {
-  const { addToBasket, removeFromBasket, basketItems } = useContext(BasketContext);
+  // const { addToBasket, removeFromBasket, basketItems } = useContext(BasketContext);
   // const isInBasket = basketItems.some((item) => item.id === product.id);
+  let basketProducts = useSelector((state) => state);
 
   const { data, isLoading, error, refetch } = useQuery("productData", () => {
     return axios.get('https://fakestoreapi.com/products');
@@ -43,15 +45,26 @@ const Products = () => {
   //     })
   // }
 
-  const handleClick = (product) => {
-    if (!basketItems.some((item) => item.id === product.id)) {
-      addToBasket(product)
-    }
-    else (
-      removeFromBasket(product)
 
-    )
-  }
+  let dispatch = useDispatch();
+
+  const handleClick = (product) => {
+    dispatch({ type: "ADD_TO_BASKET", payload: product });
+  };
+
+  const handleRemoveToBasket = (id) => {
+    dispatch({ type: "REMOVE_FROM_BASKET", payload: id });
+  };
+
+  // const handleClick = (product) => {
+  //   if (!basketItems.some((item) => item.id === product.id)) {
+  //     addToBasket(product)
+  //   }
+  //   else (
+  //     removeFromBasket(product)
+
+  //   )
+  // }
   return (
     <div className='product'>
       <Container>
@@ -75,8 +88,8 @@ const Products = () => {
         </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button size="small" variant="contained" className={basketItems.some((item) => item.id === product.id) ? "remove-btn" : "add-btn"} onClick={() => handleClick(product)}>
-                    {!basketItems.some((item) => item.id === product.id) ? <span className="btn-body">Add Basket <AddShoppingCartIcon style={{ paddingLeft: 10 }} /> </span> : <span className="btn-body">Remove Basket <RemoveShoppingCartIcon style={{ paddingLeft: 10 }} /> </span>}
+                  <Button size="small" variant="contained" className={basketProducts.some((item) => item.id === product.id) ? "remove-btn" : "add-btn"} onClick={() => handleClick(product)}>
+                    {!basketProducts.some((item) => item.id === product.id) ? <span className="btn-body">Add Basket <AddShoppingCartIcon style={{ paddingLeft: 10 }} /> </span> : <span className="btn-body">Remove Basket <RemoveShoppingCartIcon style={{ paddingLeft: 10 }} /> </span>}
                   </Button>
                 </CardActions>
               </Card>

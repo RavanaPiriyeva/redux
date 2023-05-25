@@ -13,16 +13,16 @@ import { useContext } from "react";
 import { LoginContext } from "./Pages/Login/LoginContext";
 
 function App() {
-  const { users, addUser } = useContext(LoginContext);
+  //const { users, addUser } = useContext(LoginContext);
 
-  // const storedUsers = JSON.parse(localStorage.getItem('regiteruser'));
-  const user = users.find(
-    (user) => user.islogin === true
-  );
+  // const user = users.find(
+  //   (user) => user.islogin === true
+  // );
   return (
     <>
 {
-  user ? <Private/>:<Public/>
+  //user ? <Private/>:<Public/>
+  <Public/>
 }
     </>
   );

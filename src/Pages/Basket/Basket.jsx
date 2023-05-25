@@ -14,30 +14,38 @@ import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
 import "./basket.css";
 import Order from "../../Components/Order/Order";
 import { LoginContext } from "../Login/LoginContext";
+import { useDispatch, useSelector } from "react-redux";
 
 const Basket = () => {
   //  const [total, setTotal] = useState(0);
-  const { users, addUser } = useContext(LoginContext);
-  const { addToBasket, removeFromBasket, basketItems, total } = useContext(BasketContext);
+  // const { users, addUser } = useContext(LoginContext);
+  //const { addToBasket, removeFromBasket, basketItems, total } = useContext(BasketContext);
 
-  const handleClick = (product) => {
-    if (!basketItems.some((item) => item.id === product.id)) {
-      addToBasket(product);
-    } else {
-      removeFromBasket(product);
-    }
+  // const handleClick = (product) => {
+  //   if (!basketItems.some((item) => item.id === product.id)) {
+  //     addToBasket(product);
+  //   } else {
+  //     removeFromBasket(product);
+  //   }
+  // };
+  let basketProducts = useSelector((state) => state);
+
+  console.log(basketProducts);
+  let dispatch = useDispatch();
+  const remove = (id) => {
+    dispatch({ type: "REMOVE_FROM_BASKET", payload: id });
   };
   return (
     <div className="basket">
       <Container>
         <div className="top">
-          <div className="total">Total Count : {total().toFixed(2)}$</div>
+          {/* <div className="total">Total Count : {total().toFixed(2)}$</div> */}
           <div>
             {/* {
               users.some((item) => item.islogin === true)? :<></>
 
             } */}
-            <Order />
+            {/* <Order /> */}
           </div>
         </div>
 
@@ -46,7 +54,7 @@ const Basket = () => {
           rowSpacing={1}
           columnSpacing={{ xs: 1, sm: 2, md: 3, lg: 4 }}
         >
-          {basketItems.map((product,index) => (
+          {basketProducts.map((product, index) => (
             <Grid item xs={3} style={{ padding: 20 }} key={index}>
               <Card
                 sx={{ maxWidth: 345 }}
@@ -86,13 +94,13 @@ const Basket = () => {
                     size="small"
                     variant="contained"
                     className={
-                      basketItems.some((item) => item.id === product.id)
+                      basketProducts.some((item) => item.id === product.id)
                         ? "remove-btn"
                         : "add-btn"
                     }
-                    onClick={() => handleClick(product)}
+                    onClick={() => remove(product.id)}
                   >
-                    {!basketItems.some((item) => item.id === product.id) ? (
+                    {!basketProducts.some((item) => item.id === product.id) ? (
                       <span className="btn-body">
                         Add Basket{" "}
                         <AddShoppingCartIcon style={{ paddingLeft: 10 }} />{" "}
