@@ -13,16 +13,15 @@ import { useContext } from "react";
 import { LoginContext } from "./Pages/Login/LoginContext";
 
 function App() {
-  //const { users, addUser } = useContext(LoginContext);
+  const { users, addUser } = useContext(LoginContext);
 
-  // const user = users.find(
-  //   (user) => user.islogin === true
-  // );
+  const user = users.find(
+    (user) => user.islogin === true
+  );
   return (
     <>
 {
-  //user ? <Private/>:<Public/>
-  <Public/>
+  user ? <Private/>:<Public/>
 }
     </>
   );

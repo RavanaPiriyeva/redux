@@ -11,9 +11,9 @@ const Public = () => {
         <Layout>
         <Routes>
           <Route path="/basket" element={<Basket />} />
-          {/* <Route path="/" element={<Login />} /> */}
+          <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/" element={<Products />} />
+          <Route path="/products" element={<Products />} />
           <Route path="*" element={<Notfound />} />
 
         </Routes>

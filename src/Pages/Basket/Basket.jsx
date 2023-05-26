@@ -17,8 +17,8 @@ import { LoginContext } from "../Login/LoginContext";
 import { useDispatch, useSelector } from "react-redux";
 
 const Basket = () => {
-  //  const [total, setTotal] = useState(0);
-  // const { users, addUser } = useContext(LoginContext);
+//  const [total, setTotal] = useState(0);
+  const { users, addUser } = useContext(LoginContext);
   //const { addToBasket, removeFromBasket, basketItems, total } = useContext(BasketContext);
 
   // const handleClick = (product) => {
@@ -29,23 +29,38 @@ const Basket = () => {
   //   }
   // };
   let basketProducts = useSelector((state) => state);
+  const total = basketProducts.reduce((acc, item) => acc + item.price, 0);
+
 
   console.log(basketProducts);
   let dispatch = useDispatch();
   const remove = (id) => {
     dispatch({ type: "REMOVE_FROM_BASKET", payload: id });
+    // basketProducts.forEach(element => {
+    //   total += element.price
+    //   setTotal(...total)
+    // });
+    // for(let i =0;i<basketProducts.length;i++){
+    //   total = total + basketProducts[i].price
+    //    setTotal(...total)
+    // }
   };
   return (
     <div className="basket">
       <Container>
         <div className="top">
-          {/* <div className="total">Total Count : {total().toFixed(2)}$</div> */}
-          <div>
-            {/* {
-              users.some((item) => item.islogin === true)? :<></>
+          <div className="total">Total Count :
+          {
 
-            } */}
-            {/* <Order /> */}
+
+              total.toFixed(2)
+            }$</div>
+          <div>
+            {
+              // users.some((item) => item.islogin === true)? :<></>
+
+            }
+            <Order />
           </div>
         </div>
 

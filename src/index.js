@@ -26,12 +26,15 @@ const store = createStore(basketReducer);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <QueryClientProvider client={queryClient}>
-       <Provider store={store}>
-
+    <Provider store={store}>
+      <LoginProvider>
+        <OrderProvider>
           <BrowserRouter>
             <App></App>
           </BrowserRouter>
-          </Provider>
+        </OrderProvider>
+      </LoginProvider>
+    </Provider>
     <ReactQueryDevtools initialIsOpen={false} />
   </QueryClientProvider>
 );

@@ -10,6 +10,7 @@ import { LoginContext } from "../../Pages/Login/LoginContext";
 import { useNavigate } from "react-router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useSelector } from "react-redux";
 const style = {
   position: "absolute",
   top: "50%",
@@ -22,8 +23,13 @@ const style = {
   borderRadius: 3,
 };
 const Order = () => {
-  const { addToBasket, removeFromBasket, basketItems, total } =
-    useContext(BasketContext);
+ 
+  let basketProducts = useSelector((state) => state);
+
+  const total = basketProducts.reduce((acc, item) => acc + item.price, 0);
+
+
+
   const { orders, addOrder } = useContext(OrderContext);
   const { users, addUser } = useContext(LoginContext);
   const [addAddres, setaddAddres] = useState("");
@@ -50,8 +56,8 @@ const Order = () => {
   const formik = useFormik({
     initialValues: {
       address: "",
-      total: total(),
-      count: basketItems.length,
+      total: total,
+      count: basketProducts.length,
       user: user,
     },
     validationSchema: addProductValidationSchema,
@@ -66,12 +72,14 @@ const Order = () => {
   const addSave = () => {
     handleClose()
     let order = {
-      total: total(),
-      count: basketItems.length,
+      total: total,
+      count: basketProducts.length,
       addres: addAddres,
     };
     addOrder(order)
   };
+
+
   return (
     <div className="order-box">
       <div className="order" onClick={handleOpen}>

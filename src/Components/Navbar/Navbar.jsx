@@ -14,13 +14,13 @@ import { LoginContext } from "../../Pages/Login/LoginContext";
 import { useDispatch, useSelector } from "react-redux";
 
 const Navbar = () => {
-  // const { users, setUsers } = useContext(LoginContext);
+  const { users, setUsers } = useContext(LoginContext);
   // const { basketItems } = useContext(BasketContext);
-  // const user = users.find((user) => user.islogin === true);
-  // const logout = () => {
-  //   user.islogin = false;
-  //   setUsers([...users]);
-  // };
+  const user = users.find((user) => user.islogin === true);
+  const logout = () => {
+    user.islogin = false;
+    setUsers([...users]);
+  };
 
   let basketProducts = useSelector((state) => state);
 
@@ -35,10 +35,10 @@ const Navbar = () => {
       {" "}
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="fixed" style={{ backgroundColor: "black" }}>
-          <Toolbar style={{alignItems:"baseline"}}>
+          <Toolbar style={{ alignItems: "baseline" }}>
             <h1>E-commerce</h1>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} style={{padding:'0 20px'}}>
-              <Link to="/"> Products </Link>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} style={{ padding: '0 20px' }}>
+              <Link to="/products"> Products </Link>
             </Typography>
             <Link to="/basket">
               <Button color="inherit" className="basket">
@@ -46,9 +46,21 @@ const Navbar = () => {
                 <LocalMallIcon />
               </Button>
             </Link>
-           
-            {/* <Link to="/login" className='login'> <Button color="inherit">Login</Button></Link> */}
-          </Toolbar>
+
+            {user ? (
+              <div style={{ paddingLeft: 40, textTransform: "uppercase" }}>
+                {user.name}
+                <Link to="/" className="login" onClick={logout}>
+                  {" "}
+                  <Button color="inherit">Logout</Button>
+                </Link>
+              </div>
+            ) : (
+              <Link to="/" className="login">
+                {" "}
+                <Button color="inherit">Login</Button>
+              </Link>
+            )}          </Toolbar>
         </AppBar>
       </Box>
     </div>
